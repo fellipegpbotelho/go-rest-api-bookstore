@@ -12,6 +12,7 @@ func main() {
 
 	routes.GET("/books", controllers.FindBooks)
 	routes.POST("/books", controllers.CreateBook)
+	routes.GET("/books/:id", controllers.FindBook)
 
 	err := routes.Run()
 	if err != nil {

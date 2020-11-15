@@ -14,8 +14,22 @@ type CreateBookInput struct {
 // Get all books
 func FindBooks(context *gin.Context) {
 	var books []models.Book
+
 	models.DB.Find(&books)
 	context.JSON(http.StatusOK, gin.H{"data": books})
+}
+
+// Find a book
+func FindBook(context *gin.Context) {
+	var book models.Book
+
+	queryErr := models.DB.Where("id = ?", context.Param("id")).First(&book).Error
+	if queryErr != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": "Book not found."})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"data": book})
 }
 
 // Create new book
