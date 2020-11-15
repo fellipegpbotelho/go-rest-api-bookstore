@@ -7,8 +7,7 @@ import (
 
 func main() {
 	models.ConnectDatabase()
-	router := routes.CreateRouter()
-	err := router.Run()
+	err := routes.CreateRouter().Run()
 	if err != nil {
 		panic(err.Error())
 	}
