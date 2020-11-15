@@ -2,13 +2,19 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"net/http"
+	"rest-api-bookstore/controllers"
+	"rest-api-bookstore/models"
 )
 
 func main() {
-	route := gin.Default()
-	route.GET("/", func(context *gin.Context) {
-		context.JSON(http.StatusOK, gin.H{"data": "hello world"})
-	})
-	route.Run()
+	routes := gin.Default()
+	models.ConnectDatabase()
+
+	routes.GET("/books", controllers.FindBooks)
+	routes.POST("/books", controllers.CreateBook)
+
+	err := routes.Run()
+	if err != nil {
+		panic(err.Error())
+	}
 }
