@@ -1,22 +1,14 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"rest-api-bookstore/controllers"
 	"rest-api-bookstore/models"
+	"rest-api-bookstore/routes"
 )
 
 func main() {
-	routes := gin.Default()
 	models.ConnectDatabase()
-
-	routes.GET("/books", controllers.FindBooks)
-	routes.POST("/books", controllers.CreateBook)
-	routes.GET("/books/:id", controllers.FindBook)
-	routes.PATCH("/books/:id", controllers.UpdateBook)
-	routes.DELETE("/books/:id", controllers.DeleteBook)
-
-	err := routes.Run()
+	router := routes.CreateRouter()
+	err := router.Run()
 	if err != nil {
 		panic(err.Error())
 	}
