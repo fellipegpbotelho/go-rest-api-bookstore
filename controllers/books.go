@@ -41,7 +41,6 @@ func FindBook(context *gin.Context) {
 func CreateBook(context *gin.Context) {
 	var input CreateBookInput
 	inputErr := context.ShouldBindJSON(&input)
-
 	if inputErr != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": inputErr.Error()})
 		return
@@ -49,7 +48,6 @@ func CreateBook(context *gin.Context) {
 
 	book := models.Book{Title: input.Title, Author: input.Author}
 	models.DB.Create(&book)
-
 	context.JSON(http.StatusOK, gin.H{"data": book})
 }
 
@@ -64,7 +62,6 @@ func UpdateBook(context *gin.Context) {
 	}
 
 	var input UpdateBookInput
-
 	inputErr := context.ShouldBindJSON(&input)
 	if inputErr != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": inputErr.Error()})
@@ -72,7 +69,6 @@ func UpdateBook(context *gin.Context) {
 	}
 
 	models.DB.Model(&book).Updates(input)
-
 	context.JSON(http.StatusOK, gin.H{"data": book})
 }
 
@@ -87,6 +83,5 @@ func DeleteBook(context *gin.Context) {
 	}
 
 	models.DB.Delete(&book)
-
 	context.JSON(http.StatusOK, gin.H{"data": true})
 }
